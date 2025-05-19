@@ -3,7 +3,7 @@
     <h2>Viajes</h2>
 
     <?php
-    $archivo = "data/miembros.json";
+    $archivo = "data/viajes.json";
     if (!file_exists($archivo)) file_put_contents($archivo, "[]");
 
     $datos = json_decode(file_get_contents($archivo), true);
