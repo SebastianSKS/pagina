@@ -11,16 +11,14 @@
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nombre = $_POST['nombre'];
         $descripcion = $_POST['descripcion'];
-        $imagen = $_FILES['imagen']['name'];
+        $imagen = uniqid() . "-" . basename($_FILES['imagen']['name']);
         $tmp = $_FILES['imagen']['tmp_name'];
-        $ruta = "uploads/" . basename($imagen);
+        $ruta = "uploads/" . $imagen;
 
-        // Crear carpeta si no existe
         if (!is_dir("uploads")) {
             mkdir("uploads", 0755, true);
         }
 
-        // Validar y mover imagen
         if (move_uploaded_file($tmp, $ruta)) {
             $datos[] = [
                 'nombre' => $nombre,
@@ -28,17 +26,16 @@
                 'imagen' => $imagen
             ];
             file_put_contents($archivo, json_encode($datos, JSON_PRETTY_PRINT));
-            header("Location: miembros.php");
+            header("Location: proyectos.php");
             exit;
         } else {
             echo "<p style='color:red;'>Error al subir la imagen. Verifica los permisos de la carpeta.</p>";
         }
     }
 
-    // Mostrar miembros
     foreach ($datos as $index => $item) {
         echo "<div class='tarjeta'>";
-        echo "<a href='detalle.php?tipo=miembros&id=$index'>";
+        echo "<a href='detalle.php?tipo=proyectos&id=$index'>";
         echo "<img src='uploads/" . htmlspecialchars($item['imagen']) . "' alt='' style='width:150px;height:auto;'>";
         echo "<h2>" . htmlspecialchars($item['nombre']) . "</h2>";
         echo "</a></div>";
