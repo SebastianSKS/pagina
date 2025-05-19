@@ -28,7 +28,7 @@
                 'imagen' => $imagen
             ];
             file_put_contents($archivo, json_encode($datos, JSON_PRETTY_PRINT));
-            header("Location: miembros.php");
+            header("Location: viajes.php");
             exit;
         } else {
             echo "<p style='color:red;'>Error al subir la imagen. Verifica los permisos de la carpeta.</p>";
